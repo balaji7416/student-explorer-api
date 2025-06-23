@@ -1,5 +1,5 @@
 
-```markdown
+
 # 🎓 Student Explorer API
 
 A simple RESTful API built using **Express.js** for performing full CRUD operations on a collection of students. This project was created as part of an Express.js learning journey.
@@ -20,7 +20,6 @@ A simple RESTful API built using **Express.js** for performing full CRUD operati
 
 ## 📂 Project Structure
 
-```
 student-explorer-api/
 ├── controllers/
 │   └── studentController.js
@@ -28,7 +27,6 @@ student-explorer-api/
 │   └── students.js
 ├── app.js
 └── package.json
-```
 
 ---
 
@@ -56,18 +54,18 @@ student-explorer-api/
 
 ### ❌ Problem:
 While starting the server, the following error was thrown:
-```
+
 TypeError: Missing parameter name at 1: https://git.new/pathToRegexpError
-```
+
 
 ### 🔍 Cause:
 The issue was caused by an **incompatible Express version (`5.x`)**, which had internal changes involving route parsing and `path-to-regexp`.
 
 ### ✅ Solution:
 Downgraded Express to a stable `4.x` version:
-```bash
+
 npm install express@4
-```
+
 Problem solved. The app ran smoothly after that! 😎
 
 ---
