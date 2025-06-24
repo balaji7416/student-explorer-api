@@ -20,6 +20,7 @@ student-explorer/
 cd backend
 npm install
 node app.js
+```
 
 Frontend
 Open frontend/index.html directly in your browser
