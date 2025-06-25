@@ -1,9 +1,11 @@
-let students = require("../data/students");
+//connecting to lowdb
+import db from "../data/db.js"
 
 // get all users (with optional filtering by course)
-function getAllUsers(req, res) {
+async function getAllUsers(req, res) {
+    await db.read();
     let {course} = req.query;
-    let result = students;
+    let result = db.data.students;
 
     if(course)
         result = result.filter(s => s.course.toLocaleLowerCase() === course.toLocaleLowerCase());
@@ -12,9 +14,10 @@ function getAllUsers(req, res) {
 }
 
 //get student by id
-function getUserById(req, res){
+async function getUserById(req, res){
+    await db.read();
     let id = parseInt(req.params.id);
-    let user = students.find(s => s.id === id);
+    let user = db.data.students.find(s => s.id === id);
     
     if(!user) 
         return res.status(404).send("entry not found");
@@ -23,8 +26,10 @@ function getUserById(req, res){
 }
 
 //add a new user
-function addUser(req, res){
-    let id = students.length +1
+async function addUser(req, res){
+    await db.read();
+
+    let id = db.data.students.length > 0 ? db.data.students[db.data.students.length - 1].id + 1 : 1;
     let {name, age, course} = req.body;
 
     if(!name || !age || !course)
@@ -35,17 +40,19 @@ function addUser(req, res){
         name: name,
         age: age,
         course: course
-
     };
 
-    students.push(user);
+    db.data.students.push(user);
+    await db.write();
+
     res.status(201).json({message: "user added successFully", user: user});
 }
 
 //update user by id
-function updateUserbyId(req, res){
-    let id = req.params.id;
-    let user = students.find(s => s.id === parseInt(id));
+async function updateUserbyId(req, res){
+    await db.read();
+    let id = parseInt(req.params.id);
+    let user = db.data.students.find(s => s.id === id);
 
     if(!user) return res.status(404).send("user not found");
     let initialName = user.name;
@@ -53,31 +60,33 @@ function updateUserbyId(req, res){
     let initialcourse = user.course;
 
     const {name, age, course} = req.body;
-    user.id = parseInt(id);
+    user.id = id;
     user.name = name || initialName;
     user.age = age || initialAge;
     user.course = course || initialcourse;
 
+    await db.write();
     res.json({message:"user updated successfully", user:user});
 }
 
-
 //delete user by id
-function deleteUserbyId(req, res){
+async function deleteUserbyId(req, res){
+    await db.read();
     let id = parseInt(req.params.id);
-    let userIndex = students.findIndex(s => s.id === id);
+    let userIndex = db.data.students.findIndex(s => s.id === id);
 
     if(userIndex === -1)
-        res.status(404).send("student not found");
+        return res.status(404).send("student not found");
 
-    let removed = students.splice(userIndex,1);
+    let removed = db.data.students.splice(userIndex,1);
+    await db.write();
     res.json({message: "user removed successfully", user: removed});
 }
 
-module.exports = {
+export {
     getAllUsers,
     getUserById,
     addUser,
     updateUserbyId,
     deleteUserbyId
-}
+};

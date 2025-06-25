@@ -1,10 +1,10 @@
-const express = require("express");
-const cors = require("cors"); // Add this line
+import express from "express"
+import cors from "cors" // Add this line
 const app = express();
 
 app.use(cors()); // Enable CORS 
 
-const studentRoutes = require("./routes/students");
+import studentRoutes from "./routes/students.js";
 
 app.use(express.json());  // middle ware for parsing JSON bodies
 
