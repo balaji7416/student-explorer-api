@@ -35,8 +35,8 @@ async function fetchStudents(course = ""){
         let data = document.createElement("div");
         data.className = "studentCard";
         data.innerHTML = `
-        <div>
-        Name: ${student.name} (age: ${student.age}) <br>
+        <div class="cardText">
+        ${student.name}<br>(age: ${student.age}) <br>
         ${student.course} </div>
         <div class = "buttons">
         <button onClick=updateStudent(${student.id}) class="deleteBtn" style="background-color: green">Edit</button>
@@ -80,5 +80,6 @@ async function updateStudent(id){
 
     fetchStudents(filetrByCourse.value);
 }
+
 
 fetchStudents();
