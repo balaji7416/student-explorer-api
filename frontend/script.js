@@ -1,4 +1,4 @@
-const apiURL = `http://localhost:3000/students`;
+const apiURL = `https://student-explorer-api.onrender.com/students`;
 
 let studentList = document.querySelector(".studentList");
 let form = document.querySelector("form");
