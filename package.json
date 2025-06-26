@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "start": "node backend/app.js"
-  },
-  "dependencies": {
-    "lowdb": "^7.0.1"
-  }
-}

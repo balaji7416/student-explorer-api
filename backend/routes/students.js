@@ -12,7 +12,7 @@ import {
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
 router.post("/", addUser);
-router.put("/:id",updateUserbyId);
+router.put("/:id", updateUserbyId);
 router.delete("/:id", deleteUserbyId);
 
 export default router;
